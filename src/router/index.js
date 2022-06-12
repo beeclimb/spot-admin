@@ -51,8 +51,30 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'About', icon: 'el-icon-s-home' }
     }]
+  },
+
+  {
+    path: '/staff',
+    component: Layout,
+    redirect: '/staff/table',
+    name: 'Staff',
+    meta: { title: 'Staff', icon: 'el-icon-user-solid' },
+    children: [
+      {
+        path: 'overview',
+        name: 'OverView',
+        component: () => import('@/views/staff/overview'),
+        meta: { title: 'OverView', icon: 'table' }
+      },
+      {
+        path: 'treeview',
+        name: 'TreeView',
+        component: () => import('@/views/staff/treeview'),
+        meta: { title: 'TreeView', icon: 'tree' }
+      }
+    ]
   },
 
   {
