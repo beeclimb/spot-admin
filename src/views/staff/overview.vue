@@ -49,6 +49,15 @@
       >
       </el-table-column>
     </el-table>
+    <el-pagination
+      @size-change="fetchData"
+      @current-change="fetchData"
+      :current-page.sync="current"
+      :page-size="size"
+      layout="total, prev, pager, next, jumper"
+      :total="total"
+    >
+    </el-pagination>
   </div>
 </template>
 
