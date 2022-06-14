@@ -1,5 +1,21 @@
 <template>
   <div class="app-container">
+    <el-form :inline="true" :model="teacherVo" class="demo-form-inline" size="mini">
+      <el-form-item label="StaffName" prop="inputForm">
+        <el-input v-model="teacherVo.name" placeholder="name"></el-input>
+      </el-form-item>
+      <el-form-item label="StaffLevel" prop="selectForm">
+        <el-select v-model="teacherVo.level" placeholder="level">
+          <el-option label="High" value="1"></el-option>
+          <el-option label="Medium" value="2"></el-option>
+          <el-option label="Low" value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="fetchData">Search</el-button>
+        <el-button @click="resetForm()">Reset</el-button>
+      </el-form-item>
+    </el-form>
     <el-table
       :data="teacherList"
       style="width: 100%"
@@ -88,6 +104,10 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    resetForm() {
+      this.teacherVo = {}
+      this.fetchData()
     }
   }
 }
