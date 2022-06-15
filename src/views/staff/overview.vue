@@ -23,18 +23,18 @@
       <el-table-column
         prop="id"
         label="ID"
-        width="180"
+        width="100"
       >
       </el-table-column>
       <el-table-column
         prop="name"
         label="Name"
-        width="180"
+        width="130"
       >
       </el-table-column>
       <el-table-column
         label="Introduction"
-        width="180"
+        width="120"
       >
         <template v-slot="scope">
           <div v-if="scope.row.level===1">{{ 'high' }}</div>
@@ -44,7 +44,7 @@
       </el-table-column>
       <el-table-column
         label="Career"
-        width="180"
+        width="120"
       >
         <template v-slot="scope">
           <div v-if="scope.row.level===1">{{ 'high' }}</div>
@@ -55,14 +55,29 @@
       <el-table-column
         prop="level"
         label="Level"
-        width="180"
+        width="120"
       >
       </el-table-column>
       <el-table-column
         prop="avatar"
         label="Avatar"
-        width="180"
+        width="240"
       >
+      </el-table-column>
+      <el-table-column align="right">
+        <template v-slot="scope">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.row.id)"
+          >Edit
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.row.id)"
+          >Delete
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
     <el-pagination
@@ -78,7 +93,7 @@
 </template>
 
 <script>
-import { getStaff } from '@/api/staff/staff'
+import { deleteTeacherById, getStaff } from '@/api/staff/staff'
 
 export default {
   name: 'OverView',
@@ -108,6 +123,23 @@ export default {
     resetForm() {
       this.teacherVo = {}
       this.fetchData()
+    },
+    handleEdit(id) {
+      console.log(id)
+    },
+    handleDelete(id) {
+      this.$confirm('This operation permanently deletes this record. Continue or not?', 'Warning', {
+        confirmButtonText: 'Continue',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        deleteTeacherById(id)
+        this.$message({
+          type: 'success',
+          message: 'Deleted!'
+        })
+        this.fetchData()
+      })
     }
   }
 }

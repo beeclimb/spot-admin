@@ -7,3 +7,10 @@ export function getStaff(current, size, teacherVo) {
     data: teacherVo
   })
 }
+
+export function deleteTeacherById(teacherId) {
+  return request({
+    url: `/education/teacher/${teacherId}`,
+    method: 'Delete'
+  })
+}
