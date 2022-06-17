@@ -14,3 +14,11 @@ export function deleteTeacherById(teacherId) {
     method: 'Delete'
   })
 }
+
+export function addTeacher(teacher) {
+  return request({
+    url: `/education/teacher/addTeacher`,
+    method: 'post',
+    data: teacher
+  })
+}

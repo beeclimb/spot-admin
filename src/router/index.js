@@ -69,10 +69,10 @@ export const constantRoutes = [
         meta: { title: 'OverView', icon: 'table' }
       },
       {
-        path: 'treeview',
-        name: 'TreeView',
-        component: () => import('@/views/staff/treeview'),
-        meta: { title: 'TreeView', icon: 'tree' }
+        path: 'formview',
+        name: 'Formview',
+        component: () => import('@/views/staff/formview'),
+        meta: { title: 'Formview', icon: 'tree' }
       }
     ]
   },
