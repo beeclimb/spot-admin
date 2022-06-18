@@ -33,14 +33,10 @@
       >
       </el-table-column>
       <el-table-column
+        prop="intro"
         label="Introduction"
         width="120"
       >
-        <template v-slot="scope">
-          <div v-if="scope.row.level===1">{{ 'high' }}</div>
-          <div v-else-if="scope.row.level===2">{{ 'medium' }}</div>
-          <div v-else>{{ 'row' }}</div>
-        </template>
       </el-table-column>
       <el-table-column
         label="Career"

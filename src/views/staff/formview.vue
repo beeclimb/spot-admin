@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <el-form :model="teacher" label-width="100px" class="demo-ruleForm">
+    <el-form :model="teacher" ref="teacher" :rules="rules" label-width="100px" class="demo-ruleForm">
       <el-form-item label="Staff Name" prop="name">
         <el-input v-model="teacher.name"></el-input>
       </el-form-item>
-      <el-form-item label="Introduction" prop="desc">
-        <el-input type="textarea" v-model="teacher.intro"></el-input>
+      <el-form-item label="Sort" prop="sort">
+        <el-input-number v-model="teacher.sort" :min="0"></el-input-number>
       </el-form-item>
       <el-form-item label="Level" prop="level">
         <el-select v-model="teacher.level" placeholder="Please select the staff level">
@@ -14,9 +14,15 @@
           <el-option label="low" value="3"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="Career" prop="career">
+        <el-input v-model="teacher.career" type="textarea"></el-input>
+      </el-form-item>
+      <el-form-item label="Introduction" prop="intro">
+        <el-input v-model="teacher.intro" type="textarea"></el-input>
+      </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('teacher')">Finish</el-button>
-        <el-button @click="resetForm('ruleForm')">Reset</el-button>
+        <el-button type="primary" @click="submitForm()">Finish</el-button>
+        <el-button @click="resetForm('teacher')">Reset</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -31,14 +37,39 @@ export default {
     return {
       teacher: {
         name: '',
-        intro: '',
+        sort: 0,
         level: 1,
+        career: '',
+        intro: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: 'Your name', trigger: 'blur' }
+        ],
+        career: [
+          { required: true, message: 'Your profession', trigger: 'blur' }
+        ],
+        intro: [
+          { required: true, message: 'Introduce yourself', trigger: 'blur' }
+        ]
       }
     }
   },
   methods: {
-    submitForm(teacherVo) {
-      addTeacher(teacherVo)
+    submitForm() {
+      addTeacher(this.teacher).then(response => {
+        this.$message({
+          message: 'Submit successfully',
+          type: 'success'
+        })
+        this.$router.push({ path: '/staff/overview' })
+      }).catch(error => {
+        console.log(error)
+        this.$message.error('Submit failure')
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }
