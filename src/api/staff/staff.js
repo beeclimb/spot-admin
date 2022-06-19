@@ -22,3 +22,10 @@ export function addTeacher(teacher) {
     data: teacher
   })
 }
+
+export function getTeacherInfoById(id) {
+  return request({
+    url: `/education/teacher/queryTeacherById/${id}`,
+    method: 'get'
+  })
+}

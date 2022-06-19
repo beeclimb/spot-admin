@@ -73,6 +73,13 @@ export const constantRoutes = [
         name: 'Formview',
         component: () => import('@/views/staff/formview'),
         meta: { title: 'Formview', icon: 'tree' }
+      },
+      {
+        path: 'editInfo/:id',
+        name: 'EditInfo',
+        component: () => import('@/views/staff/formview'),
+        meta: { title: 'EditInfo', noCache: true },
+        hidden: true
       }
     ]
   },

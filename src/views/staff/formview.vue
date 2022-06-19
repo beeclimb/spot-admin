@@ -30,7 +30,7 @@
 
 <script>
 import { addTeacher } from '@/api/staff/staff'
-
+import { getTeacherInfoById } from '@/api/staff/staff'
 export default {
   name: 'FormView',
   data() {
@@ -70,6 +70,11 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    getTeacherInfo(id) {
+      getTeacherInfoById(id).then(response => {
+        this.teacher = response.data
+      })
     }
   }
 }
