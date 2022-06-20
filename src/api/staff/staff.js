@@ -29,3 +29,11 @@ export function getTeacherInfoById(id) {
     method: 'get'
   })
 }
+
+export function updateTeacherById(teacher) {
+  return request({
+    url: `/education/teacher/updateTeacherById`,
+    method: 'post',
+    data: teacher
+  })
+}

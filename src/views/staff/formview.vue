@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import { addTeacher } from '@/api/staff/staff'
-import { getTeacherInfoById } from '@/api/staff/staff'
+import { addTeacher, getTeacherInfoById, updateTeacherById } from '@/api/staff/staff'
+
 export default {
   name: 'FormView',
   data() {
@@ -55,8 +55,25 @@ export default {
       }
     }
   },
+  created() {
+    if (this.$route.params && this.$route.params.id) {
+      const id = this.$route.params.id
+      this.getTeacherInfo(id)
+    }
+  },
   methods: {
     submitForm() {
+      this.teacher.id ? this.updateTeacherInfo() : this.addTeacherInfo()
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
+    getTeacherInfo(id) {
+      getTeacherInfoById(id).then(response => {
+        this.teacher = response.data
+      })
+    },
+    addTeacherInfo() {
       addTeacher(this.teacher).then(response => {
         this.$message({
           message: 'Submit successfully',
@@ -68,12 +85,16 @@ export default {
         this.$message.error('Submit failure')
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
-    getTeacherInfo(id) {
-      getTeacherInfoById(id).then(response => {
-        this.teacher = response.data
+    updateTeacherInfo() {
+      updateTeacherById(this.teacher).then(response => {
+        this.$message({
+          message: 'Update successfully',
+          type: 'success'
+        })
+        this.$router.push({ path: '/staff/overview' })
+      }).catch(error => {
+        console.log(error)
+        this.$message.error('Update failure')
       })
     }
   }
