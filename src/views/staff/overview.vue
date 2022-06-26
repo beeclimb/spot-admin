@@ -63,10 +63,9 @@
       <el-table-column align="right">
         <template v-slot="scope">
           <router-link :to="'/staff/editInfo/'+scope.row.id">
-            <el-button size="mini" type="primary" icon="el-icon-edit" circle></el-button>
+            <el-button size="mini" type="primary" icon="el-icon-edit" circle style="margin-right: 10px"></el-button>
           </router-link>
-          <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"
-          ></el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"></el-button>
         </template>
       </el-table-column>
     </el-table>

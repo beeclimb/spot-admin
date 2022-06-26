@@ -66,13 +66,13 @@ export const constantRoutes = [
         path: 'overview',
         name: 'OverView',
         component: () => import('@/views/staff/overview'),
-        meta: { title: 'OverView', icon: 'table' }
+        meta: { title: 'OverView', icon: 'el-icon-s-order' }
       },
       {
         path: 'formview',
         name: 'Formview',
         component: () => import('@/views/staff/formview'),
-        meta: { title: 'Formview', icon: 'tree' }
+        meta: { title: 'Formview', icon: 'el-icon-edit' }
       },
       {
         path: 'editInfo/:id',
