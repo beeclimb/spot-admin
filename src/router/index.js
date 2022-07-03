@@ -71,7 +71,7 @@ export const constantRoutes = [
         path: 'formview',
         name: 'Formview',
         component: () => import('@/views/staff/formview'),
-        meta: { title: 'Formview', icon: 'el-icon-edit' }
+        meta: { title: 'FormView', icon: 'el-icon-edit' }
       },
       {
         path: 'editInfo/:id',
@@ -101,6 +101,49 @@ export const constantRoutes = [
         name: 'Save',
         component: () => import('@/views/subject/save'),
         meta: { title: 'Save', icon: 'el-icon-document-add' }
+      }
+    ]
+  },
+
+  {
+    path: '/course',
+    component: Layout,
+    redirect: '/course/courseList',
+    name: 'Course',
+    meta: { title: 'Course', icon: 'el-icon-collection' },
+    children: [
+      {
+        path: 'courseList',
+        name: 'CourseList',
+        component: () => import('@/views/course/courseList'),
+        meta: { title: 'Find', icon: 'el-icon-search' }
+      },
+      {
+        path: 'courseInfo',
+        name: 'CourseInfo',
+        component: () => import('@/views/course/courseInfo'),
+        meta: { title: 'Information', icon: 'el-icon-magic-stick' }
+      },
+      {
+        path: 'courseInfoEdit/:id',
+        name: 'CourseInfoEdit',
+        component: () => import('@/views/course/courseInfo'),
+        meta: { title: 'InformationEdit', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'courseChapterEdit/:id',
+        name: 'CourseChapterEdit',
+        component: () => import('@/views/course/courseChapterEdit'),
+        meta: { title: 'CourseChapterEdit', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'coursePublishEdit/:id',
+        name: 'CoursePublishEdit',
+        component: () => import('@/views/course/coursePublishEdit'),
+        meta: { title: 'CoursePublishEdit', noCache: true },
+        hidden: true
       }
     ]
   },

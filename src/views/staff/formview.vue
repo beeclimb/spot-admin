@@ -1,31 +1,31 @@
 <template>
   <div class="app-container">
-    <el-form :model="teacher" ref="teacher" :rules="rules" label-width="100px" class="demo-ruleForm">
+    <el-form ref="teacher" :model="teacher" :rules="rules" label-width="100px" class="demo-ruleForm">
       <el-form-item label="Staff Name" prop="name">
-        <el-input v-model="teacher.name"></el-input>
+        <el-input v-model="teacher.name" />
       </el-form-item>
       <el-form-item label="Sort" prop="sort">
-        <el-input-number v-model="teacher.sort" :min="0"></el-input-number>
+        <el-input-number v-model="teacher.sort" :min="0" />
       </el-form-item>
       <el-form-item label="Level" prop="level">
         <el-select v-model="teacher.level" placeholder="Please select the staff level">
-          <el-option label="high" value="1"></el-option>
-          <el-option label="medium" value="2"></el-option>
-          <el-option label="low" value="3"></el-option>
+          <el-option label="high" value="1" />
+          <el-option label="medium" value="2" />
+          <el-option label="low" value="3" />
         </el-select>
       </el-form-item>
       <el-form-item label="Career" prop="career">
-        <el-input v-model="teacher.career" type="textarea"></el-input>
+        <el-input v-model="teacher.career" type="textarea" />
       </el-form-item>
       <el-form-item label="Introduction" prop="intro">
-        <el-input v-model="teacher.intro" type="textarea"></el-input>
+        <el-input v-model="teacher.intro" type="textarea" />
       </el-form-item>
       <!-- 讲师头像 -->
       <el-form-item label="Avatar">
         <!-- 头衔缩略图 -->
-        <pan-thumb :image="teacher.avatar"/>
+        <pan-thumb :image="teacher.avatar" />
         <!-- 文件上传按钮 -->
-        <el-button type="info" icon="el-icon-upload" @click="imagecropperShow=true" size="small">Upload
+        <el-button type="info" icon="el-icon-upload" size="small" @click="imagecropperShow=true">Upload
         </el-button>
         <!--
         v-show：是否显示上传组件
@@ -41,7 +41,8 @@
           :url="BASE_API+'/cloud/oss/uploadFile'"
           field="file"
           @close="close"
-          @crop-upload-success="cropSuccess"/>
+          @crop-upload-success="cropSuccess"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm()">Finish</el-button>

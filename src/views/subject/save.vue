@@ -10,7 +10,7 @@
           {{ item.label }}
         </el-tag>
         <el-tag>
-          <i class="el-icon-download"></i>
+          <i class="el-icon-download" />
           <a href="https://spot-admin-1.oss-cn-shanghai.aliyuncs.com/template.xlsx">Click me to view templates</a>
         </el-tag>
       </el-form-item>
