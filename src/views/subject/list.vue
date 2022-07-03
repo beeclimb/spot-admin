@@ -1,28 +1,52 @@
 <template>
   <div class="app-container">
-    <el-form label-width="120px">
-      <el-form-item label="specification">
-        <el-tag
-          :key="item.label"
-          :type="item.type">
-          {{ item.label }}
-        </el-tag>
-      </el-form-item>
-    </el-form>
+    <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom:30px;" />
+
+    <el-tree
+      ref="tree2"
+      :data="data2"
+      :props="defaultProps"
+      :filter-node-method="filterNode"
+      class="filter-tree"
+      default-expand-all
+    />
+
   </div>
 </template>
 
 <script>
+import { getAllSubjects } from '@/api/subject/subject'
+
 export default {
   name: 'List',
   data() {
     return {
-      item: { type: 'info', label: 'Excel Specification' }
+      filterText: '',
+      data2: [],
+      defaultProps: {
+        children: 'secondSubjectList',
+        label: 'title'
+      }
+    }
+  },
+  watch: {
+    filterText(val) {
+      this.$refs.tree2.filter(val)
+    }
+  },
+  created() {
+    this.getSubjectsList()
+  },
+  methods: {
+    getSubjectsList() {
+      getAllSubjects().then(response => {
+        this.data2 = response.data.allSubjects
+      })
+    },
+    filterNode(value, data) {
+      if (!value) return true
+      return data.title.toLowerCase().indexOf(value) !== -1
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

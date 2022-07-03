@@ -65,6 +65,7 @@ export default {
           type: 'success',
           message: 'Upload Successfully'
         })
+        this.$router.push({ path: '/subject/list' })
       }
     },
     handleError(response) {

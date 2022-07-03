@@ -38,7 +38,7 @@
           :width="100"
           :height="100"
           :ki="imagecropperKey"
-          :url="BASE_API+'/education/oss/uploadFile'"
+          :url="BASE_API+'/cloud/oss/uploadFile'"
           field="file"
           @close="close"
           @crop-upload-success="cropSuccess"/>
