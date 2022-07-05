@@ -6,11 +6,11 @@
       <el-step title="Course Modules" icon="el-icon-document-copy"/>
       <el-step title="Release And Approve" icon="el-icon-upload"/>
     </el-steps>
-    <el-form ref="courseData" :model="courseData" label-width="120px">
+    <el-form ref="courseDataForm" :model="courseData" :rules="rules" label-width="120px">
       <el-form-item label="Title" prop="title">
         <el-input v-model="courseData.title"/>
       </el-form-item>
-      <el-form-item label="Subject">
+      <el-form-item label="Subject" prop="subject">
         <el-select v-model="courseData.subjectParentId" placeholder="Subject List" @change="getChildrenSubject">
           <el-option
             v-for="subjectParent in subjectParentList"
@@ -61,7 +61,7 @@
         <el-input-number v-model="courseData.price" :min="0"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="next">Next</el-button>
+        <el-button type="primary" @click="next('courseDataForm')">Next</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -88,7 +88,18 @@ export default {
       teacherList: [],
       subjectParentList: [],
       subjectsList: [],
-      BASE_API: process.env.VUE_APP_BASE_API
+      BASE_API: process.env.VUE_APP_BASE_API,
+      rules: {
+        title: [
+          { required: true, message: 'Please fill in the title', trigger: 'blur' }
+        ],
+        description: [
+          { required: true, message: 'Please fill in the description', trigger: 'blur' }
+        ],
+        price: [
+          { required: true, message: 'Please fill in the description', trigger: 'change' }
+        ]
+      }
     }
   },
   created() {
@@ -123,20 +134,34 @@ export default {
         this.subjectParentList = response.data.allSubjects
       })
     },
-    next() {
-      saveBasicCourseInfo(this.courseData).then(response => {
-        this.$message({
-          message: 'Basic course information saved',
-          type: 'success'
-        })
-        return response
-      }).then(response => {
-        this.$router.push({ path: '/course/courseChapterEdit/' + response.data.courseId })
-      })
+    next(formName) {
+      this.check(formName)
     },
     getTeachers() {
       getTeacherList().then(response => {
         this.teacherList = response.data
+      })
+    },
+    check(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          saveBasicCourseInfo(this.courseData).then(response => {
+            this.$message({
+              message: 'Basic course information saved',
+              type: 'success'
+            })
+            return response
+          }).then(response => {
+            this.$router.push({ path: '/course/courseChapterEdit/' + response.data.courseId })
+          })
+        } else {
+          this.$notify({
+            title: 'Warning',
+            message: 'Check necessary information and retry',
+            type: 'warning'
+          })
+          return false
+        }
       })
     }
   }
