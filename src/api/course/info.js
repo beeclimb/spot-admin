@@ -14,3 +14,18 @@ export function getTeacherList() {
     method: 'get'
   })
 }
+
+export function getCourseInfoById(courseId) {
+  return request({
+    url: `/education/course/getCourseInfo/${courseId}`,
+    method: 'get'
+  })
+}
+
+export function updateCourseInfo(courseInfoVo) {
+  return request({
+    url: '/education/course/updateCourseInfo',
+    method: 'post',
+    data: courseInfoVo
+  })
+}

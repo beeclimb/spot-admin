@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { getTeacherList, saveBasicCourseInfo } from '@/api/course/info'
+import { getCourseInfoById, getTeacherList, saveBasicCourseInfo, updateCourseInfo } from '@/api/course/info'
 import { getAllSubjects } from '@/api/subject/subject'
 
 export default {
@@ -99,14 +99,37 @@ export default {
         price: [
           { required: true, message: 'Please fill in the description', trigger: 'change' }
         ]
-      }
+      },
+      courseId: ''
     }
   },
   created() {
     this.getTeachers()
     this.getSubjects()
+    this.getCourseId()
+    if (this.courseId !== '') {
+      this.getCourseData()
+    }
   },
   methods: {
+    getCourseData() {
+      getCourseInfoById(this.courseId).then(response => {
+        this.courseData = response.data.course
+        getAllSubjects().then(response => {
+          const subjectParentList = response.data.allSubjects
+          for (let i = 0; i < subjectParentList.length; ++i) {
+            if (subjectParentList[i].id === this.courseData.subjectParentId) {
+              this.subjectsList = subjectParentList[i].secondSubjectList
+            }
+          }
+        })
+      })
+    },
+    getCourseId() {
+      if (this.$route.params && this.$route.params.id) {
+        this.courseId = this.$route.params.id
+      }
+    },
     handleAvatarSuccess(res) {
       this.courseData.cover = res.data.avatarUrl
     },
@@ -142,18 +165,34 @@ export default {
         this.teacherList = response.data
       })
     },
+    nextSave() {
+      saveBasicCourseInfo(this.courseData).then(response => {
+        this.$message({
+          message: 'Basic course information saved',
+          type: 'success'
+        })
+        return response
+      }).then(response => {
+        this.$router.push({ path: '/course/courseChapterEdit/' + response.data.courseId })
+      })
+    },
+    nextUpdate() {
+      updateCourseInfo(this.courseData).then(response => {
+        this.$message({
+          message: 'Basic course information updated',
+          type: 'success'
+        })
+        this.$router.push({ path: '/course/courseChapterEdit/' + this.courseId })
+      })
+    },
     check(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          saveBasicCourseInfo(this.courseData).then(response => {
-            this.$message({
-              message: 'Basic course information saved',
-              type: 'success'
-            })
-            return response
-          }).then(response => {
-            this.$router.push({ path: '/course/courseChapterEdit/' + response.data.courseId })
-          })
+          if (this.courseData.id) {
+            this.nextUpdate()
+          } else {
+            this.nextSave()
+          }
         } else {
           this.$notify({
             title: 'Warning',
