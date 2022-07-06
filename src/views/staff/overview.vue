@@ -65,7 +65,8 @@
           <router-link :to="'/staff/editInfo/'+scope.row.id">
             <el-button size="mini" type="primary" icon="el-icon-edit" circle style="margin-right: 10px"></el-button>
           </router-link>
-          <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"></el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -121,13 +122,13 @@ export default {
         confirmButtonText: 'Continue',
         cancelButtonText: 'Cancel',
         type: 'warning'
-      }).then(() => {
-        deleteTeacherById(id)
+      }).then(async() => {
+        await deleteTeacherById(id)
         this.$message({
           type: 'success',
           message: 'Deleted!'
         })
-        this.fetchData()
+        await this.fetchData()
       }).catch(error => {
         console.log(error)
       })
