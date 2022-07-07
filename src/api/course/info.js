@@ -29,3 +29,17 @@ export function updateCourseInfo(courseInfoVo) {
     data: courseInfoVo
   })
 }
+
+export function getCoursePublishInfoById(courseId) {
+  return request({
+    url: `/education/course/getCoursePublishInfoById/${courseId}`,
+    method: 'get'
+  })
+}
+
+export function publishCourseById(courseId) {
+  return request({
+    url: `/education/course/publishCourseById/${courseId}`,
+    method: 'put'
+  })
+}
